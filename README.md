@@ -80,3 +80,7 @@ cd frontend && npm install && npm run dev
 版权所有 © 2026 上海如静知华信息科技有限公司。
 
 关键词：知华科技企业司库、Treasury 管理系统、资金管理平台、流动性预测、付款审批系统、Java 司库系统、Vue 企业系统、上海软件开发公司。
+
+## 交易对手集中度
+
+新增 `POST /api/treasury/insights/counterparty-concentration`，计算单一金融机构资金占比、未受保障资金和压力情景流动性，并返回 `BALANCED`、`REVIEW` 或 `DIVERSIFY`。
