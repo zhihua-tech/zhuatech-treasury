@@ -1,8 +1,20 @@
 /* Copyright 2026 上海如静知华信息科技有限公司 · https://www.zhuatech.cn/ */
 package cn.zhuatech.treasury.service;
 import jakarta.validation.constraints.*;import org.springframework.stereotype.Service;import java.math.*;import java.util.*;
+/**
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 @Service public class CounterpartyConcentrationService {
+ /**
+  * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+  */
  public Result evaluate(Request r){double concentration=r.topCounterpartyCash().multiply(BigDecimal.valueOf(100)).divide(r.totalCash(),1,RoundingMode.HALF_UP).doubleValue();BigDecimal stressed=r.totalCash().subtract(r.stressedWithdrawal()).add(r.committedFacilities()).setScale(2,RoundingMode.HALF_UP);boolean weak=List.of("BB","B","CCC").contains(r.counterpartyRating().toUpperCase());String status=concentration>50||r.uninsuredCash().compareTo(r.totalCash().multiply(new BigDecimal("0.30")))>0||weak?"DIVERSIFY":concentration>35||stressed.signum()<0?"REVIEW":"BALANCED";List<String> actions=new ArrayList<>();if(concentration>35)actions.add("降低单一金融机构资金集中度");if(r.uninsuredCash().signum()>0)actions.add("核查未受保障资金并调整账户分布");if(stressed.signum()<0)actions.add("补充压力情景下的备用流动性");if(actions.isEmpty())actions.add("维持多银行资金配置并持续监控评级");return new Result(concentration,stressed,status,actions);}
+ /**
+  * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+  */
  public record Request(@NotNull @DecimalMin("0.01") BigDecimal totalCash,@NotNull @DecimalMin("0") BigDecimal topCounterpartyCash,@NotNull @DecimalMin("0") BigDecimal uninsuredCash,@Pattern(regexp="(?i)AAA|AA|A|BBB|BB|B|CCC") String counterpartyRating,@NotNull @DecimalMin("0") BigDecimal stressedWithdrawal,@NotNull @DecimalMin("0") BigDecimal committedFacilities){}
+ /**
+  * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+  */
  public record Result(double concentrationRate,BigDecimal stressedLiquidity,String status,List<String> actions){}
 }

@@ -4,9 +4,15 @@ package cn.zhuatech.treasury.service;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 class PaymentInstructionGovernanceServiceTest {
     private final PaymentInstructionGovernanceService service = new PaymentInstructionGovernanceService();
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     @Test void sendsFullyAuthorizedInstruction() {
         var result = service.assess(new PaymentInstructionGovernanceService.Request(
                 "TRX-001", 5_000_000, true, true, true, true, true, true, true, true, true));
@@ -14,6 +20,9 @@ class PaymentInstructionGovernanceServiceTest {
         assertThat(result.blockers()).isEmpty();
     }
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     @Test void holdsUnsafeInstruction() {
         var result = service.assess(new PaymentInstructionGovernanceService.Request(
                 "TRX-002", 8_000_000, true, false, false, false, false, false, false, false, false));
