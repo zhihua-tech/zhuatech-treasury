@@ -1,0 +1,48 @@
+[
+  {
+    "patch": {},
+    "expected": {
+      "decision": "PASS",
+      "usableBeforePayment": "#90000",
+      "afterSafetyReserve": "#10000"
+    },
+    "error": false
+  },
+  {
+    "patch": {
+      "duePayments": "95000"
+    },
+    "expected": {
+      "decision": "HOLD",
+      "paymentShortfall": "#5000"
+    },
+    "error": false
+  },
+  {
+    "patch": {
+      "duePayments": "85000"
+    },
+    "expected": {
+      "decision": "REVIEW",
+      "afterSafetyReserve": "#-5000"
+    },
+    "error": false
+  },
+  {
+    "patch": {
+      "restrictedCash": "100001"
+    },
+    "expected": {},
+    "error": true
+  },
+  {
+    "patch": {
+      "duePayments": "80000"
+    },
+    "expected": {
+      "decision": "PASS",
+      "afterSafetyReserve": "#0"
+    },
+    "error": false
+  }
+]

@@ -1,0 +1,88 @@
+{
+  "slug": "treasury",
+  "title": "受限资金扣除与到期支付敞口",
+  "fields": [
+    {
+      "key": "id",
+      "label": "记录编号",
+      "type": "ID"
+    },
+    {
+      "key": "bankBalance",
+      "label": "银行余额",
+      "type": "NUMBER",
+      "scale": 2,
+      "min": "0",
+      "max": "1000000000000"
+    },
+    {
+      "key": "restrictedCash",
+      "label": "受限资金",
+      "type": "NUMBER",
+      "scale": 2,
+      "min": "0",
+      "max": "1000000000000"
+    },
+    {
+      "key": "confirmedReceipts",
+      "label": "本期已确认到账",
+      "type": "NUMBER",
+      "scale": 2,
+      "min": "0",
+      "max": "1000000000000"
+    },
+    {
+      "key": "duePayments",
+      "label": "本期到期支付",
+      "type": "NUMBER",
+      "scale": 2,
+      "min": "0",
+      "max": "1000000000000"
+    },
+    {
+      "key": "safetyCash",
+      "label": "保留安全现金",
+      "type": "NUMBER",
+      "scale": 2,
+      "min": "0",
+      "max": "1000000000000"
+    }
+  ],
+  "columns": [
+    {
+      "key": "usableBeforePayment",
+      "label": "支付前非受限可用"
+    },
+    {
+      "key": "afterDuePayments",
+      "label": "支付后余额"
+    },
+    {
+      "key": "afterSafetyReserve",
+      "label": "扣安全现金后余量"
+    },
+    {
+      "key": "paymentShortfall",
+      "label": "到期支付缺口"
+    }
+  ],
+  "description": "从银行余额扣除受限资金及安全现金，再加本期已确认到账，核对到期支付，不把受限资金当可支付余额。",
+  "owner": "上海如静知华信息科技有限公司",
+  "website": "https://www.zhuatech.cn/",
+  "authorization": "商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。",
+  "version": 1,
+  "notes": "输入均须为已获授权的同口径数据。金额固定人民币元；比例为百分数。核算结果只用于复核，未审批、未写库、未发起外部调用，也未触发付款、签名、资料销毁或设备控制。建议不构成法律、安全、会计或碳核证结论。",
+  "sample": {
+    "asOf": "2026-10-23",
+    "records": [
+      {
+        "id": "ITEM-001",
+        "bankBalance": "100000",
+        "restrictedCash": "20000",
+        "confirmedReceipts": "10000",
+        "duePayments": "70000",
+        "safetyCash": "10000"
+      }
+    ]
+  }
+}
