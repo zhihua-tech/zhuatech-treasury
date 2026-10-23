@@ -1,0 +1,86 @@
+{
+  "slug": "treasury",
+  "title": "付款预算与银行余额预检",
+  "fields": [
+    {
+      "key": "payment_no",
+      "label": "付款编号",
+      "type": "ID",
+      "length": 200
+    },
+    {
+      "key": "account",
+      "label": "银行账户标识",
+      "type": "ID",
+      "length": 200
+    },
+    {
+      "key": "payment",
+      "label": "本次付款",
+      "type": "DECIMAL",
+      "length": 200,
+      "scale": 2
+    },
+    {
+      "key": "available",
+      "label": "可用余额",
+      "type": "DECIMAL",
+      "length": 200,
+      "scale": 2
+    },
+    {
+      "key": "reserved",
+      "label": "已预留金额",
+      "type": "DECIMAL",
+      "length": 200,
+      "scale": 2
+    },
+    {
+      "key": "limit",
+      "label": "付款限额",
+      "type": "DECIMAL",
+      "length": 200,
+      "scale": 2
+    }
+  ],
+  "unique": [
+    [
+      "payment_no"
+    ]
+  ],
+  "rules": [
+    {
+      "op": "SUM_LE",
+      "args": [
+        "payment",
+        "reserved",
+        "available"
+      ],
+      "code": "CASH_SHORTAGE",
+      "message": "本次付款加预留不得超过可用余额",
+      "bad": {
+        "payment": "45000"
+      }
+    },
+    {
+      "op": "LE",
+      "args": [
+        "payment",
+        "limit"
+      ],
+      "code": "PAYMENT_LIMIT",
+      "message": "付款不能超过当前限额",
+      "bad": {
+        "limit": "9999"
+      }
+    }
+  ],
+  "sampleCsv": "payment_no,account,payment,available,reserved,limit\nPAY-001,BANK-01,10000,50000,10000,20000\n",
+  "limits": {
+    "rows": 500,
+    "bytes": 262144,
+    "columns": 32,
+    "cellCharacters": 4000
+  },
+  "scope": "Read-only batch validation; no persistence, reference-master lookup or full production certification."
+}
